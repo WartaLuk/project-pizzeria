@@ -119,6 +119,59 @@
       thisProduct.element.classList.toggle('active');
     });
   }
+    initOrderForm(){
+      const thisProduct = this;
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+      
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+
+      console.log('initOrderForm');
+    }
+    procesOrder(){
+      const thisProduct = this;
+
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', forsData);
+      let price = thisProduct.data.price;
+
+      for(let paramId in thisProduct.data.params) {
+        
+        const param = thisProduct.data.params[paramId];
+        console.log(paramId, param);
+
+        
+        for(let optionId in param.options) {
+          
+          const option = param.options[optionId];
+          console.log(optionId, option);
+        }
+  }
+
+  // update calculated price in the HTML
+    thisProduct.priceElem.innerHTML = price;
+      console.log('procesOrder');
+    }
+    getElements(){
+      const thisProduct = this;
+    
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
 }
   const testProduct = new Product();
   console.log('testProduct: ', testProduct);
