@@ -96,6 +96,7 @@ dataSource.products = {
       '<img class="active ingredients-pepper" src="images/salad/black-pepper.svg" style="z-index: 7;">',
     ],
     params: {
+      
       ingredients: {
         label: 'Ingredients',
         type: 'checkboxes',
