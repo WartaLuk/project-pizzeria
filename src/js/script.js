@@ -55,8 +55,11 @@
   const classNames = {
     menuProduct: {
       wrapperActive: 'active',
-      imageVisible: 'active'
-    }
+      imageVisible: 'active',
+    },
+    cart: {
+      wrapperActive: 'active',
+    },
   };
 
   const settings = {
@@ -81,7 +84,6 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
-      thisProduct.initCart();
     }
     renderInMenu() {
       const thisProduct = this;
