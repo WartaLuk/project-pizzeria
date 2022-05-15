@@ -51,7 +51,6 @@
       remove: '[href="#remove"]',
     },
   };
-
   const classNames = {
     menuProduct: {
       wrapperActive: 'active',
@@ -102,6 +101,11 @@
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
+    addToCart() {
+      const thisProduct = this;
+      const thisApp = this;
+      thisApp.cart.add(thisProduct.prepareCartProduct);
+    }
     initAccordion() {
       const thisProduct = this;
       thisProduct.accordionTrigger.addEventListener('click', function(event) {
@@ -127,6 +131,7 @@
       thisProduct.cartButton.addEventListener('click', function(event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart(); 
       });
     }
     processOrder() {
@@ -155,6 +160,7 @@
         }
       }
       price *= thisProduct.amountWidget.value;
+      thisProduct.priceSingle = price;
       thisProduct.priceElem.innerHTML = price;
     }
     initAmountWidget() {
@@ -164,6 +170,16 @@
         thisProduct.processOrder();
       });
     }
+    prepareCartProduct() {
+      const thisProduct = this;
+      const productSummary = {
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+        params: {},
+      };
+      return(productSummary);
+    }
+  
   }
   class AmountWidget {
     constructor(element) {
@@ -235,6 +251,10 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
+    add(menuProduct) {
+      // const thisCart = this;
+      console.log('adding product', menuProduct);
+    }
     initActions() {
       const thisCart = this;
 
@@ -243,7 +263,6 @@
       });
     }
   }
-
   const app = {
     initMenu: function() {
       const thisApp = this;
@@ -275,6 +294,5 @@
       thisApp.initCart();
     }
   };
-
   app.init();
 }
