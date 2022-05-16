@@ -110,12 +110,37 @@
       const thisProduct = this;
       
       const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.name,
+        amount: thisProduct.amountWidget.value,
         priceSingle: thisProduct.priceSingle,
         price: thisProduct.priceSingle * thisProduct.amountWidget.value,
-        params: {},
+        params: thisProduct.prepareCartProductParams(),
       };
       return productSummary;
     }
+    prepareCartProductParams() {
+      const thisProduct = this;
+
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      const params = {};
+      for (let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        }
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          if(optionSelected) {
+          const optSelected = {[optionId]: option.label};
+          Object.assign(params[paramId].options, optSelected);
+        }
+      }
+      return params; 
+    }
+  }
     initAccordion() {
       const thisProduct = this;
       thisProduct.accordionTrigger.addEventListener('click', function(event) {
@@ -247,14 +272,20 @@
     }
     getElements(element) {
       const thisCart = this;
-      thisCart.dom = {};
+      thisCart.dom = {
+        toggleTrigger: element.querySelector(select.cart.toggleTrigger),
+        productList: element.querySelector(select.cart.productList),
+      };
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
     add(menuProduct) {
-      // const thisCart = this;
-      console.log('adding product', menuProduct);
+      const thisCart = this;
+      const generatedHTML = templates.cartProduct(menuProduct);
+      console.log(generatedHTML);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
     initActions() {
       const thisCart = this;
