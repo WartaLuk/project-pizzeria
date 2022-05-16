@@ -5,16 +5,17 @@
 
   const select = {
     templateOf: {
-      menuProduct: '#template-menu-product'
+      menuProduct: '#template-menu-product',
+      cartProduct: '#template-cart-product', // CODE ADDED
     },
     containerOf: {
       menu: '#product-list',
-      cart: '#cart'
+      cart: '#cart',
     },
     all: {
       menuProducts: '#product-list > .product',
       menuProductsActive: '#product-list > .product.active',
-      formInputs: 'input, select'
+      formInputs: 'input, select',
     },
     menuProduct: {
       clickable: '.product__header',
@@ -22,21 +23,21 @@
       priceElem: '.product__total-price .price',
       imageWrapper: '.product__images',
       amountWidget: '.widget-amount',
-      cartButton: '[href="#add-to-cart"]'
+      cartButton: '[href="#add-to-cart"]',
     },
     widgets: {
       amount: {
-        input: 'input[name="amount"]',
+        input: 'input.amount', // CODE CHANGED
         linkDecrease: 'a[href="#less"]',
-        linkIncrease: 'a[href="#more"]'
-      }
+        linkIncrease: 'a[href="#more"]',
+      },
     },
+    // CODE ADDED START
     cart: {
       productList: '.cart__order-summary',
       toggleTrigger: '.cart__summary',
-      totalNumber: '.cart__total-number',
-      totalPrice:
-        '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+      totalNumber: `.cart__total-number`,
+      totalPrice: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
       subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
       deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
       form: '.cart__order',
@@ -50,27 +51,39 @@
       edit: '[href="#edit"]',
       remove: '[href="#remove"]',
     },
+    // CODE ADDED END
   };
+  
   const classNames = {
     menuProduct: {
       wrapperActive: 'active',
       imageVisible: 'active',
     },
+    // CODE ADDED START
     cart: {
       wrapperActive: 'active',
     },
+    // CODE ADDED END
   };
-
+  
   const settings = {
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 0,
-      defaultMax: 10
-    }
+      defaultMin: 1,
+      defaultMax: 9,
+    }, // CODE CHANGED
+    // CODE ADDED START
+    cart: {
+      defaultDeliveryFee: 20,
+    },
+    // CODE ADDED END
   };
-
+  
   const templates = {
-    menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML)
+    menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
+    // CODE ADDED START
+    cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
+    // CODE ADDED END
   };
   class Product {
     constructor(id, data) {
@@ -111,10 +124,10 @@
       
       const productSummary = {
         id: thisProduct.id,
-        name: thisProduct.name,
+        name: thisProduct.data.name,
         amount: thisProduct.amountWidget.value,
         priceSingle: thisProduct.priceSingle,
-        price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+        price: thisProduct.price,
         params: thisProduct.prepareCartProductParams(),
       };
       return productSummary;
@@ -129,18 +142,18 @@
         params[paramId] = {
           label: param.label,
           options: {}
-        }
+        };
         for (let optionId in param.options) {
           const option = param.options[optionId];
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
           if(optionSelected) {
-          const optSelected = {[optionId]: option.label};
-          Object.assign(params[paramId].options, optSelected);
+            const optSelected = {[optionId]: option.label};
+            Object.assign(params[paramId].options, optSelected);
+          }
         }
+        return params; 
       }
-      return params; 
     }
-  }
     initAccordion() {
       const thisProduct = this;
       thisProduct.accordionTrigger.addEventListener('click', function(event) {
@@ -194,8 +207,9 @@
           }
         }
       }
-      price *= thisProduct.amountWidget.value;
       thisProduct.priceSingle = price;
+      price *= thisProduct.amountWidget.value;
+      thisProduct.price = price;
       thisProduct.priceElem.innerHTML = price;
     }
     initAmountWidget() {
@@ -286,6 +300,9 @@
       console.log(generatedHTML);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       thisCart.dom.productList.appendChild(generatedDOM);
+
+      thisCart.products.push(menuProduct);
+      console.log('thisCart.products: ', thisCart.products);
     }
     initActions() {
       const thisCart = this;
