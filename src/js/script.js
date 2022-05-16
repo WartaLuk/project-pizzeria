@@ -300,8 +300,7 @@
       console.log(generatedHTML);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       thisCart.dom.productList.appendChild(generatedDOM);
-
-      thisCart.products.push(menuProduct);
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
       console.log('thisCart.products: ', thisCart.products);
     }
     initActions() {
@@ -312,6 +311,29 @@
       });
     }
   }
+  class CartProduct {
+    constructor(menuProduct, element) {
+      const thisCartProduct = this;
+      thisCartProduct.id = menuProduct.id;
+
+      thisCartProduct.getElements(element);
+      console.log(thisCartProduct);
+      thisCartProduct.initAmountWidget();
+      
+
+  }
+  getElement(element) {
+    thisCartProduct = this;
+    thisCartProduct.dom = {
+      amountWidget: '.widget-amount',
+      price: '.cart__product-price',
+      edit: '[href="#edit"]',
+      remove: '[href="#remove"]',
+    };
+    thisCartProduct.dom.wrapper = element;
+
+  }
+}
   const app = {
     initMenu: function() {
       const thisApp = this;
