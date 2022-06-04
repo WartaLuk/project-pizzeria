@@ -30,22 +30,22 @@ export const select = {
       linkIncrease: 'a[href="#more"]',
     },
     datePicker: {
-        wrapper: '.date-picker',
-        input: `input[name="date"]`,
-      },
-      hourPicker: {
-        wrapper: '.hour-picker',
-        input: 'input[type="range"]',
-        output: '.output',
-      },
+      wrapper: '.date-picker',
+      input: `input[name="date"]`,
     },
-    booking: {
-      peopleAmount: '.people-amount',
-      hoursAmount: '.hours-amount',
-      tables: '.floor-plan .table',
+    hourPicker: {
+      wrapper: '.hour-picker',
+      input: 'input[type="range"]',
+      output: '.output',
     },
-    nav: {
-      links: '.main-nav a',
+  },
+  booking: {
+    peopleAmount: '.people-amount',
+    hoursAmount: '.hours-amount',
+    tables: '.floor-plan .table',
+  },
+  nav: {
+    links: '.main-nav a',
   },
   // CODE ADDED START
   cart: {
@@ -125,6 +125,7 @@ export const settings = {
 };
   
 export const templates = {
+
   menuProduct: Handlebars.compile(
     document.querySelector(select.templateOf.menuProduct).innerHTML
   ),
