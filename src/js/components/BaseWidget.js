@@ -1,3 +1,4 @@
+
 class BaseWidget {
   constructor(wrapperElement, initialValue) {
     const thisWidget = this;
@@ -18,17 +19,10 @@ class BaseWidget {
   
     const newValue = thisWidget.parseValue(value);
   
-    /* TODO: Add validation */
-  
     if (thisWidget.correctValue !== newValue && thisWidget.isValid(newValue)) {
       thisWidget.correctValue = newValue;
       thisWidget.announce();
   
-      /*} else if (newValue < settings.amountWidget.defaultMin) {
-        thisWidget.correctValue = settings.amountWidget.defaultMin;
-      } else if (newValue > settings.amountWidget.defaultMax) {
-        thisWidget.correctValue = settings.amountWidget.defaultMax;
-      }*/
     }
     thisWidget.renderValue();
   }

@@ -11,7 +11,6 @@ class Cart {
     thisCart.getElements(element);
     thisCart.initActions();
 
-    console.log('new Cart', thisCart);
   }
 
   getElements(element) {
@@ -81,6 +80,7 @@ class Cart {
       })
       .then(function (parsedResponse) {
         console.log('parsedResponse', parsedResponse);
+        //??
       });
   }
 
@@ -90,21 +90,18 @@ class Cart {
     for (let product of thisCart.products) {
       if (event.id == product.id) {
         const index = thisCart.products.indexOf(product);
-        console.log('index', index);
+
         const deleted = thisCart.products.splice(index, 1);
+        //??
         console.log('deleted', deleted);
 
-        console.log(event);
         let productDiv = event.dom.wrapper;
-        console.log(event.dom.wrapper);
         productDiv.remove();
         thisCart.update();
       }
     }
   }
   add(menuProduct) {
-
-    console.log('adding product', menuProduct);
     const thisCart = this;
 
     const generatedHTML = templates.cartProduct(menuProduct);
@@ -114,7 +111,7 @@ class Cart {
     thisCart.dom.productList.appendChild(generatedDOM);
 
     thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-    console.log('thisCart.products', thisCart.products);
+   
     thisCart.update();
   }
 
