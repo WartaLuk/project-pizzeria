@@ -3,12 +3,14 @@ export const select = {
     menuProduct: '#template-menu-product',
     cartProduct: '#template-cart-product', 
     bookingWidget: '#template-booking-widget',
+    home: '#template-home',
   },
   containerOf: {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
     booking: '.booking-wrapper',
+    home: '.home-wrapper',
   },
   all: {
     menuProducts: '#product-list > .product',
@@ -43,9 +45,14 @@ export const select = {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
     tables: '.floor-plan .table',
+    phone: `input[name="phone"]`,
+    address: `input[name="address"]`,
+    starters: `input[type="checkbox"]`,
+    submit: '.order-confirmation [type="submit"]',
   },
   nav: {
     links: '.main-nav a',
+    homeLinks: '.links-wrapper a',
   },
   // CODE ADDED START
   cart: {
@@ -67,6 +74,9 @@ export const select = {
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
   },
+  home: {
+    carousel: '.main-carousel',
+  }
   // CODE ADDED END
 };
   
@@ -83,6 +93,7 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    tableChosen: 'chosen',
   },
   nav: {
     active: 'active',
@@ -112,11 +123,11 @@ export const settings = {
     tableIdAttribute: 'data-table',
   },
   db: {
-    url: '//localhost:3131',
+    url: '//' + window.location.hostname + (window.location.hostname=='localhost' ? ':3131' : ''),
     products: 'products',
     orders: 'orders',
-    booking: 'booking',
-    event: 'event',
+    booking: 'bookings',
+    event: 'events',
     dateStartParamKey: 'date_gte',
     dateEndParamKey: 'date_lte',
     notRepeatParam: 'repeat=false',
@@ -137,4 +148,5 @@ export const templates = {
   bookingWidget: Handlebars.compile(
     document.querySelector(select.templateOf.bookingWidget).innerHTML
   ),
+
 };
