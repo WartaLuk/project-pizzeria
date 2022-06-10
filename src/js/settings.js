@@ -1,7 +1,7 @@
 export const select = {
   templateOf: {
     menuProduct: '#template-menu-product',
-    cartProduct: '#template-cart-product', 
+    cartProduct: '#template-cart-product', // CODE ADDED
     bookingWidget: '#template-booking-widget',
     home: '#template-home',
   },
@@ -37,7 +37,7 @@ export const select = {
     },
     hourPicker: {
       wrapper: '.hour-picker',
-      input: 'input[type="range"]',
+      input: `input[type="range"]`,
       output: '.output',
     },
   },
@@ -60,7 +60,7 @@ export const select = {
     toggleTrigger: '.cart__summary',
     totalNumber: `.cart__total-number`,
     totalPrice:
-        '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+      '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
     subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
     deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
     form: '.cart__order',
@@ -74,12 +74,13 @@ export const select = {
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
   },
+
   home: {
     carousel: '.main-carousel',
-  }
+  },
   // CODE ADDED END
 };
-  
+
 export const classNames = {
   menuProduct: {
     wrapperActive: 'active',
@@ -93,7 +94,6 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
-    tableChosen: 'chosen',
   },
   nav: {
     active: 'active',
@@ -102,16 +102,18 @@ export const classNames = {
     active: 'active',
   },
 };
-  
+
 export const settings = {
   amountWidget: {
     defaultValue: 1,
     defaultMin: 1,
     defaultMax: 9,
-  }, 
+  }, // CODE CHANGED
+  // CODE ADDED START
   cart: {
     defaultDeliveryFee: 20,
   },
+  // CODE ADDED END
   hours: {
     open: 12,
     close: 24,
@@ -123,7 +125,10 @@ export const settings = {
     tableIdAttribute: 'data-table',
   },
   db: {
-    url: '//' + window.location.hostname + (window.location.hostname=='localhost' ? ':3131' : ''),
+    url:
+      '//' +
+      window.location.hostname +
+      (window.location.hostname == 'localhost' ? ':3131' : ''),
     products: 'products',
     orders: 'orders',
     booking: 'bookings',
@@ -134,9 +139,8 @@ export const settings = {
     repeatParam: 'repeat_ne=false',
   },
 };
-  
-export const templates = {
 
+export const templates = {
   menuProduct: Handlebars.compile(
     document.querySelector(select.templateOf.menuProduct).innerHTML
   ),
@@ -148,5 +152,7 @@ export const templates = {
   bookingWidget: Handlebars.compile(
     document.querySelector(select.templateOf.bookingWidget).innerHTML
   ),
-
+  home: Handlebars.compile(
+    document.querySelector(select.templateOf.home).innerHTML
+  ),
 };
