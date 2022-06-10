@@ -58,8 +58,6 @@ class Home {
         );
       }
     }
-    initWidgets(element) {
-    }
 }
 
 export default Home;
