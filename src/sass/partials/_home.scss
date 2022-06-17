@@ -104,11 +104,12 @@
   max-width: 650px;
   padding: 0 25px;
 }
-
+.main-carousel {
+  overflow: hidden;
+}
 .carousel-cell {
   display: flex;
   flex-direction: row;
-
   img{
     width: 200px;
     height: 225px;
@@ -117,7 +118,6 @@
 
   .carousel-article{
     padding: 0 30px;
-
     h2 {
       font-weight: $font-normal;
       font-family: $font-header;
